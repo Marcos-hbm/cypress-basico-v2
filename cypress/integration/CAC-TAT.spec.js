@@ -2,6 +2,7 @@
 
 
     describe('Central de Atendimento ao Cliente TAT', function() {
+        const three_seconds = 3000
         beforeEach(function(){
             cy.visit('./src/index.html')
         })
@@ -11,8 +12,9 @@
         })
       
 
-        it('preenche os campos obrigatórios e envia o formulário', function(){
+        it.only('preenche os campos obrigatórios e envia o formulário', function(){
             const long_text = "Meu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinhoMeu testinho"
+            cy.clock()
             cy.get('#firstName').type('Marcos')
             cy.get('#lastName').type('Morato')
             cy.get('#email').type('marcoshmailton15@hotmail.com')
@@ -20,6 +22,8 @@
             cy.contains('button', 'Enviar').click()
 
             cy.get('.success').should('be.visible')
+            cy.tick(three_seconds)
+            cy.get('.success').should('not.be.visible')
         })
 
         it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function(){
@@ -76,7 +80,7 @@
             cy.get('select').select('mentoria').should('have.value', 'mentoria')
         })
 
-        it('seleciona um produto (Blog) por seu índice', function(){
+        it('seleciona um produto (Blog) por seu índices', function(){
             cy.get('#product').select(1).should('have.value', 'blog')
         })
 
