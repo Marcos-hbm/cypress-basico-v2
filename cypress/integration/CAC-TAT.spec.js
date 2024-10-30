@@ -27,11 +27,12 @@
         })
 
         it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function(){
-            
+            cy.clock()
             cy.get('#firstName').type('Marcos')
             cy.get('#lastName').type('Morato')
             cy.get('#email').type('marcoshmailton15@hotmail,com')
             cy.contains('button', 'Enviar').click()
+            cy.tick(three_seconds)
             cy.get('.error').should('be.visible')
         })
 
